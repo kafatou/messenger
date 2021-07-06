@@ -15,11 +15,12 @@ class AppBarMessage extends StatelessWidget {
         color :Colors.grey.withOpacity(0.1)
       ),
       child:Padding(
-      padding: const EdgeInsets.only(top:8.0,left: 8.0, right: 8.0),
+      padding: const EdgeInsets.only(top:8.0,left: 5.0, right: 8.0),
       child: Row(  
         children: [
+          IconButton(icon: Icon(Icons.arrow_back), onPressed: null),
           Padding(
-            padding: const EdgeInsets.only(right: 10.0),
+            padding: const EdgeInsets.only(left: 18.0,right: 30.0),
             child: contact.urlImage!='pas de photo'
             ?CircularImageUser(
                 urlImage:
@@ -33,27 +34,31 @@ class AppBarMessage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children:[
-                  Text(
-                    contact.prenom,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    contact.nom,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.only(top:18.0,left: 8.0,right: 20.0),
+                child: Row(
+                  children:[
+                    Text(
+                      contact.prenom,
+                      style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      contact.nom,
+                      style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                  ],
+                ),
               ),  
-
             ],
-          )
+          ),
+          //IconButton(icon: Icon(Icons.call), onPressed: null),
+          //IconButton(icon: Icon(Icons.videocam), onPressed: null),
         ],
       ),
      )

@@ -1,8 +1,13 @@
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'package:messenger_project/Models/message.dart';
+import 'package:messenger_project/Providers/sendImgProvider.dart';
 import 'package:messenger_project/utils/networking.dart';
+import 'package:provider/provider.dart';
 
 class BottomWidget extends StatelessWidget {
   String emailDest;
@@ -10,7 +15,10 @@ class BottomWidget extends StatelessWidget {
   TextEditingController controller=new TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Container(
+    //var provider=Provider.of<SendImgProvider>(context,listen: false);
+    return ChangeNotifierProvider(
+      create: (context)=>SendImgProvider(),
+      child:Container(
       height: 80,
       width: double.infinity,
       decoration: BoxDecoration(
@@ -27,7 +35,17 @@ class BottomWidget extends StatelessWidget {
                 SizedBox(width: 8,),
                 Icon(Icons.keyboard_voice,size: 22,color: Colors.lightBlue,),
                 SizedBox(width: 8,),
-                Icon(Icons.image ,size: 22,color: Colors.lightBlue,)
+                Consumer<SendImgProvider>(
+                  builder: (context,SendImgProvider sendImgProvider,_)
+                  {
+                    return IconButton(icon:Icon(Icons.image ,size: 22,color: Colors.lightBlue,),onPressed:(){
+                      //sendImgProvider.email=emailDest;
+                      sendImgProvider.getNewImage(emailDest);
+                    } 
+                    );
+                    //Icon(Icons.image ,size: 22,color: Colors.lightBlue);
+                })
+                
               ],
             ),
           ),
@@ -56,30 +74,12 @@ class BottomWidget extends StatelessWidget {
                 ),
                 SizedBox(width: 5,
                 ),
-
-                /*FloatingActionButton(
-                  backgroundColor: Colors.grey.withOpacity(0.5),
-                  child:Icon(Icons.send , size: 20,color: Colors.lightBlue,),
-                  onPressed:()async {
-                    //print('tttttttttttttttttttttttttt');
-                    if(controller!=null)
-                    {
-                      //print('ouiiiiiiiiiiiiiiiiiiiiii');
-                      String email=await recupEmail();
-                      Message msg=new Message(email,controller.text);
-                      int i=await Networking.uploadDataSms(msg,emailDest);
-                      if(i==1)
-                        controller.clear();
-                      //print(i.toString());
-                    }
-                  }
-                ),*/
                 IconButton(icon: Icon(Icons.send , size: 22,color: Colors.lightBlue,),
                   onPressed: ()async{
-                    if(controller!=null)
+                    if(controller.text.isEmpty==false )
                     {
                       String email=await recupEmail();
-                      Message msg=new Message(email,controller.text);
+                      Message msg=new Message(email,controller.text,false);
                       int i=await Networking.uploadDataSms(msg,emailDest);
                       if(i==1)
                         controller.clear();       
@@ -91,6 +91,7 @@ class BottomWidget extends StatelessWidget {
           ),
         ],
       )
+    ),
     );
   }
 

@@ -6,6 +6,10 @@ import 'CircularImageUser.dart';
 class AppBarMessenger extends StatelessWidget {
   final double radius = 50;
 
+  String email;
+
+  AppBarMessenger(this.email);
+
   @override
   Widget build(BuildContext context) {
     //SafeArea est widget qui insage son child par un remplissage 
@@ -31,7 +35,7 @@ class AppBarMessenger extends StatelessWidget {
                 ),
                 IconButton(icon: Icon(Icons.edit),
                   onPressed: (){
-                    
+                    Navigator.pushNamed(context, GeneratedRoutes.edit,arguments: email);
                   }
                 )
               ],

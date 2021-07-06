@@ -20,19 +20,10 @@ class ListViewAllContact extends StatelessWidget {
   ListViewAllContact(this.allContact,this.email);
   @override
   Widget build(BuildContext context) {
-    var provider=Provider.of<ResearchProvider>(context,listen: false);
-    provider.controller.clear();
-    print(email);
     return ListView.builder(
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
           onTap: () {
-            //list.add(Contact.fromJson([index]));
-            //Contact contact=new Contact(email, null, null, null);
-            //list.add(email);
-            //print(allContact[index].email);
-            //print('kkkkkkfirst'+list.first.email);
-            //print('kkkkkk'+list.last);
             Navigator.pushNamed(context, GeneratedRoutes.conversation,arguments: ScreenArguments(allContact[index],email));
           },
           child: OneRowContactMessage(allContact[index]));

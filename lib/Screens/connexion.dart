@@ -30,7 +30,7 @@ class Connexion extends StatelessWidget {
               FormWidgetAuthen(),
               AuthenButton(),
               TextButton(
-                child: Text("S'inscrire",style: TextStyle(color: Colors.blue),),
+                child: Text("S'inscrire",style: TextStyle(fontSize:20,color: Colors.blue),),
                 onPressed: (){
                   Navigator.pushNamed(context, GeneratedRoutes.loginScreen);
                 },

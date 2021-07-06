@@ -7,7 +7,7 @@ class Contact {
   String statut = "Hello WOrld";
 
   Contact.fromJson(dynamic obj) {
-    //id = obj["id"];
+    id = obj["userId"];
     email = obj["email"];
     nom = obj["nom"];
     prenom=obj["prenom"];

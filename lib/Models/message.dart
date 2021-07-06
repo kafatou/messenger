@@ -2,12 +2,14 @@ class Message
 {
   String _email;
   String _message;
+  bool _isImg;
 
-  Message(this._email, this._message);
+  Message(this._email, this._message,this._isImg);
 
   Message.fromJson(dynamic obj) {
     email = obj["emailSource"];
     message = obj["message"];
+    isImg=obj["isImg"];
   }
 
   String get message => _message;
@@ -22,5 +24,10 @@ class Message
     _email = value;
   }
 
+  bool get isImg => _isImg;
+
+  set isImg(bool value) {
+    _isImg = value;
+  }
 
 }

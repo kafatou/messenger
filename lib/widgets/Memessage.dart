@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:messenger_project/Models/message.dart';
 
 class Memessage extends StatelessWidget {
   bool isMe;
-  String msg;
+  Message msg;
   Memessage({@required this.isMe,this.msg});
 
   @override
@@ -15,17 +16,21 @@ class Memessage extends StatelessWidget {
           children: <Widget>[
             Flexible(
               child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.all(Radius.circular(40))),
-                  child: Padding(
-                    padding: const EdgeInsets.all(3.0),
-                    child: Text(
+                decoration: BoxDecoration(
+                color: Colors.blue,
+                borderRadius: BorderRadius.all(Radius.circular(40))),
+                child: Padding(
+                  padding: const EdgeInsets.all(3.0),
+                  
+                  child: msg.isImg==false 
+                    ?Text(
                       //"Flutter is better than",
-                      msg,
-                      style: TextStyle(color: Colors.black, fontSize: 20),
-                    ),
-                  )),
+                    msg.message,
+                    style: TextStyle(color: Colors.black, fontSize: 20),
+                    )
+                    :Image.network(msg.message),
+                )
+              ),
             ),
           ],
         ),
@@ -43,11 +48,13 @@ class Memessage extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(40))),
               child: Padding(
                 padding: const EdgeInsets.all(3.0),
-                child: Text(
-                  //"Flutter is Better than",
-                  msg,
-                  style: TextStyle(color: Colors.black, fontSize: 20),
-                ),
+                child: //msg.isImg==false 
+                  /*?Text(
+                    //"Flutter is better than",
+                    msg.message,
+                    style: TextStyle(color: Colors.black, fontSize: 20),
+                  )
+                  :*/Image.network(msg.message),
               ),
             ))
           ],

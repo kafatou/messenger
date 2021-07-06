@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:messenger_project/Models/Contact.dart';
 import 'package:messenger_project/Models/message.dart';
+import 'package:messenger_project/Models/messageIdentify.dart';
 import 'package:messenger_project/widgets/BottomWidget.dart';
 import 'package:messenger_project/widgets/ListViewAllContact.dart';
 import 'package:messenger_project/widgets/Memessage.dart';
@@ -22,14 +23,20 @@ class ConversationScreen extends StatefulWidget {
 }
 
 class _ConversationScreenState extends State<ConversationScreen> {
-  List<Message> allMsg = [];
+  List<MessageIdentify> allMsg = [];
   bool isMe;
+  CollectionReference collectionReference;
+  MessageIdentify messageIdentify;
   @override
   Widget build(BuildContext context) {
     String idUser = FirebaseAuth.instance.currentUser.uid;
-    CollectionReference user = FirebaseFirestore.instance.collection("discussions")
+    collectionReference= FirebaseFirestore.instance.collection("discussions")
       .doc(idUser).collection(widget.contact.email);
-      
+    if(collectionReference!=null) 
+    {
+      collectionReference= FirebaseFirestore.instance.collection("discussions")
+        .doc(widget.contact.id).collection(widget.email);
+   }
     return Scaffold(
       body:Container(
         child: Padding(
@@ -39,7 +46,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
               AppBarMessage(widget.contact),
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                  stream: user.snapshots(),
+                  stream:collectionReference.snapshots(),
                   builder: (context, snapshot)
                   {
                     if (snapshot.hasError) {
@@ -51,17 +58,20 @@ class _ConversationScreenState extends State<ConversationScreen> {
                     
                     if(snapshot.data.docs!=null)
                     {
-                      print(widget.email);
+                      //print(widget.email);
                       print('ttttttttttttttttttttt');
                       for (var doc in snapshot.data.docChanges) {
                         print('ffffffffffffff'+doc.doc['emailSource']);
                         if(doc.doc['emailSource']==widget.email)
+                        {
                           isMe=true;
+                        } 
                         else
                           isMe=false;
-                        allMsg.add(Message.fromJson(doc.doc.data()));
+                        messageIdentify=new MessageIdentify(isMe, Message.fromJson(doc.doc.data()));
+                        allMsg.add(messageIdentify);
                       }
-                      return ListViewAllMsg(allMsg,isMe);
+                      return ListViewAllMsg(allMsg);
                     }
                     else 
                       return Text('');
