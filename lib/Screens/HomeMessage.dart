@@ -113,7 +113,7 @@ class _HomeMessageState extends State<HomeMessage> {
                               {
                                 allContactResearch.add(a);
                               }
-                            }
+                            }                            
                             
                           }
                           return provider.controller!=null ?ListViewAllContact(allContactResearch,widget.email):ListViewAllContact(allContact,widget.email);     
